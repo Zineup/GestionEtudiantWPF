@@ -1,0 +1,60 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TelerikWpfApp1"
+        xmlns:chart="http://schemas.syncfusion.com/wpf"
+      xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="TelerikWpfApp1.PageStatis"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageStatis">
+
+
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#03C8A8" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF1AD6B8" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.DataContext>
+            <local:UsersViewModel/>
+        </Grid.DataContext>
+        <chart:SfChart3D Margin="68,77,122,27" >
+            <chart:SfChart3D.PrimaryAxis>
+                <chart:CategoryAxis3D/>
+            </chart:SfChart3D.PrimaryAxis>
+
+            <chart:SfChart3D.SecondaryAxis>
+                <chart:NumericalAxis3D 
+                                       RangePadding="Normal" FontSize="20" 
+                                       Minimum="0" Maximum="40"
+                                       Interval="5" Foreground="Black">
+                    <chart:NumericalAxis3D.AxisLineStyle>
+                        <Style TargetType="Line">
+                            <Setter Property="Stroke" Value="Transparent"/>
+                        </Style>
+                    </chart:NumericalAxis3D.AxisLineStyle>
+                </chart:NumericalAxis3D>
+
+            </chart:SfChart3D.SecondaryAxis>
+
+            <chart:ColumnSeries3D ItemsSource="{Binding ListF}" XBindingPath="Filiere" YBindingPath="nbEtudiant" Margin="-81,0,-142,8" BorderBrush="#FFA62A2A" Interior="#FFF5793F" SegmentSelectionBrush="#FF467FE2" EmptyPointInterior="#FFFBF083" Foreground="#FF615E5D">
+            </chart:ColumnSeries3D>
+        </chart:SfChart3D>
+        <Label Content="Nombre des étudiants par filière " Margin="111,51,269,0" FontSize="26" Foreground="#FFF5793F" Height="42" FontWeight="Bold" FontFamily="Century Gothic"  VerticalAlignment="Top"/>
+
+        <Button Style="{StaticResource flecheStyle}" Click="ImageButton_Click" Width="50" Height="50" Margin="38,51,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <Image Source="/photos/left-arrow.png"/>
+        </Button>
+
+
+    </Grid>
+</Page>

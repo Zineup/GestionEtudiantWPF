@@ -1,0 +1,136 @@
+﻿<Page x:Class="TelerikWpfApp1.PageEtudiant"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TelerikWpfApp1"
+      xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1100"
+      Title="PageEtudiant">
+
+    <DockPanel>
+        <DockPanel.Resources>
+            <local:ViewModel x:Key="ViewModel" />
+            <local:ViewModelEtudiant x:Key="ViewModelEtudiant" />
+        </DockPanel.Resources>
+        <DockPanel.Background>
+            <ImageBrush ImageSource="photos\back9.jpg" Stretch="UniformToFill"/>
+        </DockPanel.Background>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,40">
+            <Button x:Name="btn_etudiant" Content="Gestion des Etudiants" Margin="20" HorizontalAlignment="Center" Padding="8" Click="Click_btn_etudiant" 
+                                FontSize="20" />
+            <Button x:Name="btn_filiere" Content="Gestion des Filières" HorizontalAlignment="Center" Margin="20" Click="Click_btn_filiere" FontSize="20"  />
+            <Button x:Name="btn_statistique" Content="Statistiques" HorizontalAlignment="Center" Margin="20" Click="Click_btn_statistiques" FontSize="20" />
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="50,0,20,20">
+            <Border
+                CornerRadius="5"
+                 Background="#FF00988F">
+                <Label Content="Rechercher par Filière :" FontWeight="Bold" FontFamily="Microsoft YaHei UI" FontSize="18" Foreground="White" Padding="8" Opacity="0.9"/>
+            </Border>
+
+            <telerik:RadComboBox
+                SelectionChanged="RadComboBox_SelectionChanged"
+                x:Name="radComboBox"
+                EmptyText="Choisir une Filière.."
+                DataContext="{StaticResource ViewModel}" 
+                ItemsSource="{Binding MesFilieres}"
+                DisplayMemberPath="Nom_filiere"
+                IsEditable="True" 
+                TextSearchMode="Contains" 
+                IsFilteringEnabled="True" Height="43" Width="267"
+                TextBoxStyle="{StaticResource myStyle}" 
+                HorizontalAlignment="Left" Margin="0,12,0,0" FontFamily="Microsoft YaHei UI" FontSize="13">
+
+            </telerik:RadComboBox>
+            <Border 
+                x:Name="myBorder" 
+                CornerRadius="5" 
+                Margin="0,50,0,50" 
+                Visibility="Hidden" 
+                Background="#FF00988F">
+                <StackPanel 
+                x:Name="panel_info"
+                Orientation="Vertical" 
+                Margin="0"  
+                HorizontalAlignment="Center" Opacity="0.9">
+                    <Label FontFamily="Microsoft YaHei UI" FontSize="18" Margin="10" Foreground="White" FontWeight="Bold" TextOptions.TextFormattingMode="Display">
+                        <TextBlock TextDecorations="Underline">Informations sur la Filière</TextBlock>
+                    </Label>
+                    <Label x:Name="info_filiere" Content="filiere" FontFamily="Microsoft YaHei UI" FontWeight="Bold" Margin="20,5" Foreground="White" FontSize="16"/>
+                    <Label x:Name="info_responsable" Content="Responsable" FontFamily="Microsoft YaHei UI" FontWeight="Bold" Margin="20,5,20,20" Foreground="White" FontSize="16"/>
+                </StackPanel>
+            </Border>
+
+            <Button x:Name="btn_modifer" Content="Modifier" Click="Click_btn_modifier" FontSize="20" Width="220"></Button>
+            <Button x:Name="btn_deconnexion" Content="Quitter" Margin="0,10, 0, 0" FontSize="20" Click="Quitter" Width="220"/>
+
+        </StackPanel>
+
+        <StackPanel 
+            DockPanel.Dock="Right" 
+            Orientation="Vertical" 
+            HorizontalAlignment="Right" 
+            Margin="20,0,50,30">
+            <Border
+                CornerRadius="5"
+                 Background="#FFE96800" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <Label x:Name="titre_grid" 
+                Content="Tous Les Etudiants" 
+                HorizontalAlignment="Center" Foreground="White" FontFamily="Microsoft YaHei UI" FontSize="20" Margin="0" FontWeight="Bold" Opacity="0.9" Padding="10"/>
+            </Border>
+
+            <Border>
+                <telerik:RadGridView 
+                x:Name="gridView" 
+                DataContext="{StaticResource ViewModelEtudiant}" 
+                ItemsSource="{Binding EtudiantList}"   
+                AutoGenerateColumns="False"
+                MaxHeight="430"
+                Width="900"    
+                HorizontalAlignment="Right" BorderBrush="{x:Null}" Opacity="0.9">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn
+                        Header="CNE"
+                        DataMemberBinding="{Binding cne}"
+                        Width="80">
+                            <telerik:GridViewDataColumn.Background>
+                                <SolidColorBrush Color="#FF267987" Opacity="0.4"/>
+                            </telerik:GridViewDataColumn.Background>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn 
+                        Header="Nom"
+                        DataMemberBinding="{Binding nom}"
+                        Width="80"/>
+                        <telerik:GridViewDataColumn 
+                        Header="Prénom"
+                        DataMemberBinding="{Binding prenom}" 
+                        Width="80"/>
+                        <telerik:GridViewDataColumn 
+                        Header="Filière"
+                        DataMemberBinding="{Binding Filiere.Nom_filiere}" />
+                        <telerik:GridViewImageColumn 
+                        Header="Image"
+                        DataMemberBinding="{Binding myImage}"
+                        Width="120"/>
+                        <telerik:GridViewDataColumn 
+                        Header="Sexe" 
+                        DataMemberBinding="{Binding sexe}"
+                        Width="60"/>
+                        <telerik:GridViewDataColumn
+                        Header="Date de Naissance"
+                        DataMemberBinding="{Binding date_naiss}" />
+
+                    </telerik:RadGridView.Columns>
+
+                </telerik:RadGridView>
+            </Border>
+
+        </StackPanel>
+
+
+    </DockPanel>
+</Page>
